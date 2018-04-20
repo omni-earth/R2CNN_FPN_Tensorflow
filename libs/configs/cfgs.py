@@ -127,7 +127,7 @@ F: 0.785888023548
 """
 
 # root path
-ROOT_PATH = os.path.abspath(r'C:\Users\yangxue\Documents\GitHub\R2CNN_FPN_Tensorflow')
+ROOT_PATH = os.path.abspath('/mnt/cirrus/models/R2CNN_FPN_Tensorflow')
 
 # pretrain weights path
 TEST_SAVE_PATH = ROOT_PATH + '/tools/test_result'
