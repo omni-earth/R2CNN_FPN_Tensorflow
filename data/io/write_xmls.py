@@ -27,7 +27,7 @@ def XML(imagename, boxCoords, imageShape):
     filename.text = imagename + '.jpg'
     path = SubElement(top, 'path')
     path.text= 'JPEGImages/'+imagename+ '.jpg'
-    
+
     for boxCoord in boxCoords:
         objects = SubElement(top, 'object')
         name = SubElement(objects,'name')
@@ -113,6 +113,7 @@ def getInfo(f):
     filename_split = os.path.splitext(f)
     filename_zero, fileext = filename_split
     basename = os.path.basename(filename_zero)
+    print("file: ", basename)
     tree = ET.ElementTree(file=f)
     root = tree.getroot()
     def chunks(l, n):
@@ -131,7 +132,9 @@ def getInfo(f):
     ordered_points_list = order_points(pairs)
     img_height = tree.find('.//height').text
     img_width = tree.find('.//width').text
-    img_shape = np.array(img_height, img_width)
+    img_depth = tree.find('.//depth').text
+    print("image shape: ", img_height, img_width, img_depth)
+    img_shape = [img_height, img_width, img_depth]
     filename = basename
     return filename, ordered_points_list, img_shape
     
