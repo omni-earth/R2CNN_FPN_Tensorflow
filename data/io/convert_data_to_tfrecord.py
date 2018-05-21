@@ -90,7 +90,7 @@ def convert_pascal_to_tfrecord():
         if not os.path.exists(img_path):
             print('{} is not exist!'.format(img_path))
             continue
-
+        print("img_name: ", img_name)
         img_height, img_width, gtbox_label = read_xml_gtbox_and_label(xml)
 
         # img = np.array(Image.open(img_path))
@@ -111,6 +111,7 @@ def convert_pascal_to_tfrecord():
 
         writer.write(example.SerializeToString())
 
+        print("xml_path: ", xml_path, img_name)  
         view_bar('Conversion progress', count + 1, len(glob.glob(xml_path + '/*.xml')))
 
     print('\nConversion is complete!')

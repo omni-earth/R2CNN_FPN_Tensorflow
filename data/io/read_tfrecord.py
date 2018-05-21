@@ -40,6 +40,7 @@ def read_single_example_and_decode(filename_queue):
     gtboxes_and_label = tf.reshape(gtboxes_and_label, [-1, 9])
 
     num_objects = tf.cast(features['num_objects'], tf.int32)
+    print("img_name, img, gtboxes_and_label, num_objects: ", img_name, img, gtboxes_and_label, num_objects)
     return img_name, img, gtboxes_and_label, num_objects
 
 
@@ -58,16 +59,19 @@ def read_and_prepocess_single_img(filename_queue, shortside_len, is_training):
         img, gtboxes_and_label = image_preprocess.short_side_resize(img_tensor=img, gtboxes_and_label=gtboxes_and_label,
                                                                     target_shortside_len=shortside_len)
 
+    print("img_name, img, gtboxes_and_label, num_objects: ", img_name, img, gtboxes_and_label, num_objects)
     return img_name, img, gtboxes_and_label, num_objects
 
 
 def next_batch(dataset_name, batch_size, shortside_len, is_training):
-    if dataset_name not in ['ship', 'spacenet', 'pascal', 'coco']:
+    if dataset_name not in ['ship', 'spacenet', 'pascal', 'coco', 'building', 'belmont']:
         raise ValueError('dataSet name must be in pascal or coco')
 
     if is_training:
+        #pattern = os.path.join('../data/tfrecords', dataset_name + '_train*')
         pattern = os.path.join('../data/tfrecords', dataset_name + '_train*')
     else:
+        #pattern = os.path.join('../data/tfrecords', dataset_name + '_test*')
         pattern = os.path.join('../data/tfrecords', dataset_name + '_test*')
 
     print('tfrecord path is -->', os.path.abspath(pattern))
@@ -81,8 +85,10 @@ def next_batch(dataset_name, batch_size, shortside_len, is_training):
         tf.train.batch(
                        [img_name, img, gtboxes_and_label, num_obs],
                        batch_size=batch_size,
-                       capacity=100,
-                       num_threads=16,
+                       #capacity=100,
+                       capacity=10,
+                       #num_threads=16,
+                       num_threads=2,
                        dynamic_pad=True)
     return img_name_batch, img_batch, gtboxes_and_label_batch, num_obs_batch
 
