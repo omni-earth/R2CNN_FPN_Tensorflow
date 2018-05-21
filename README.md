@@ -62,20 +62,15 @@ Clone the repository
   ```Shell    
   cd $R2CNN_ROOT/tools      
   ``` 
-4. Choose a model([FPN](https://github.com/yangxue0827/FPN_Tensorflow)  and R2CNN)     
-If you want to train [FPN](https://github.com/yangxue0827/FPN_Tensorflow) :        
-  ```Shell    
-  python train.py   
-  ```      
+4. Run R2CNN)     
 
-elif you want to train R2CNN:  
    ```Shell    
   python train1.py   
   ``` 
 
 # Infer   
 1. Trained weights are stored in $R2CNN_ROOT/output/res101_trained_weights/v5/   
-2. put images for inference in $R2CNN_ROOT/tools/inference_image      
+2. put images for inference in $R2CNN_ROOT/tools/inference_image/     
      
   ```Shell    
   cd $R2CNN_ROOT/tools      
