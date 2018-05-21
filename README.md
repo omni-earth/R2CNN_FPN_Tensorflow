@@ -27,16 +27,15 @@ You can also use docker environment, command: docker pull yangxue2docker/tensorf
   git clone https://github.com/omni-earth/R2CNN_FPN_Tensorflow.git
   ```     
 
-# Make tfrecord   
-The image name is best in English.    
+# Make tfrecord     
 The data is VOC format, reference [here](sample.xml)     
 data path format  ($R2CNN_ROOT/data/io/divide_data.py)    
-VOCdevkit  
->VOCdevkit_train  
+belmont_rotated  
+>belmont_rotated  
 >>Annotation  
 >>JPEGImages   
 
->VOCdevkit_test   
+>belmont_rotated   
 >>Annotation   
 >>JPEGImages   
 
