@@ -51,31 +51,6 @@ Clone the repository
  aws s3 cp s3://oe-evp/R2CNN_FPN_Tensorflow/tfrecords/building_top300_051419_successfull10kIter.tfrecord $R2CNN_ROOT/data/tfrecords/ 
  ```
  
-# Demo   
-1、Unzip the weight $R2CNN_ROOT/output/res101_trained_weights/*.rar    
-2、put images in $R2CNN_ROOT/tools/inference_image   
-3、Configure parameters in $R2CNN_ROOT/libs/configs/cfgs.py and modify the project's root directory    
-4、     
-  ```Shell    
-  cd $R2CNN_ROOT/tools      
-  ```    
-5、image slice      
-If you want to test [FPN](https://github.com/yangxue0827/FPN_Tensorflow) :        
-  ```Shell    
-  python inference.py   
-  ```    
-
-elif you want to test R2CNN:   
-  
-  ```Shell    
-  python inference1.py   
-  ```   
-6、large image      
-  ```Shell    
-  cd $FPN_ROOT/tools
-  python demo.py(demo1.py) --src_folder=.\demo_src --des_folder=.\demo_des         
-  ```   
-
 # Train   
 1、Modify $R2CNN_ROOT/libs/lable_name_dict/***_dict.py, corresponding to the number of categories in the configuration file    
 2、download pretrain weight([resnet_v1_101_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_101_2016_08_28.tar.gz) or [resnet_v1_50_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz)) from [here](https://github.com/yangxue0827/models/tree/master/slim), then extract to folder $R2CNN_ROOT/data/pretrained_weights    
@@ -94,6 +69,21 @@ elif you want to train R2CNN:
   python train1.py   
   ``` 
 
+# Infer   
+1、Unzip the weight $R2CNN_ROOT/output/res101_trained_weights/*.rar    
+2、put images in $R2CNN_ROOT/tools/inference_image   
+3、Configure parameters in $R2CNN_ROOT/libs/configs/cfgs.py and modify the project's root directory    
+     
+  ```Shell    
+  cd $R2CNN_ROOT/tools      
+  ```    
+
+If you want to run inference with R2CNN:   
+  
+  ```Shell    
+  python inference1.py   
+  ```    
+
 # Test tfrecord     
   ```Shell    
   cd $R2CNN_ROOT/tools   
@@ -109,10 +99,7 @@ elif you want to train R2CNN:
 # Summary    
   ```Shell    
   tensorboard --logdir=$R2CNN_ROOT/output/res101_summary/ 
-  ```     
-![01](output/res101_summary/fast_rcnn_loss.bmp) 
-![02](output/res101_summary/rpn_loss.bmp) 
-![03](output/res101_summary/total_loss.bmp) 
+  ```    
 
 # Graph
 ![04](graph.png) 
