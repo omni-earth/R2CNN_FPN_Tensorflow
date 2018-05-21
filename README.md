@@ -28,9 +28,9 @@ You can also use docker environment, command: docker pull yangxue2docker/tensorf
   ```Shell
   $R2CNN_ROOT is equivalent to your current working directory where this repo was pulled to,
   e.g. /mnt/cirrus/models/R2CNN_FPN_Tensorflow/
-  
+   ```
   Make sure this full path is defined in libs/configs/cfgs.py
-  ```
+  
 
 # Make tfrecord     
 The data is VOC format, reference [here](sample.xml)     
