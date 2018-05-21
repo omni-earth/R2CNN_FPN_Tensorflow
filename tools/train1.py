@@ -251,7 +251,7 @@ def train():
                     save_dir = os.path.join(FLAGS.trained_checkpoint, cfgs.VERSION+"_buildings")
                     mkdir(save_dir)
 
-                    save_ckpt = os.path.join(save_dir, 'belmont_voc_v1_600plus_shortside600_step_'+str(_global_step)+'model.ckpt')
+                    save_ckpt = os.path.join(save_dir, 'belmont_voc_v1_step_'+str(_global_step)+'model.ckpt')
                     saver.save(sess, save_ckpt)
                     print(' weights had been saved')
 
