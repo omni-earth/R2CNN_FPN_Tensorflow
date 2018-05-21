@@ -1,15 +1,11 @@
-#intended to change counter-clockwise coordinates from top-right to clockwise coordinates from top-left
+# Intended to change counter-clockwise coordinates from top-right to clockwise coordinates from top-left
 
-from scipy.spatial import distance as dist
 import numpy as np
-import cv2
 import xml.etree.ElementTree as xmlParser
 import xml.etree.cElementTree as ET
 import os, sys, glob
 from xml.dom import minidom
-import untangle
 import xmltodict
-import json
 import argparse
 
 parser = argparse.ArgumentParser()
