@@ -19,7 +19,6 @@ def parse(f):
     filename_zero, fileext = filename_split
     basename = os.path.basename(filename_zero)
     outpath = './rewrite_annos/'
-    #print(f)
     def chunks(l, n):
         for i in range(0, len(l), n):
             yield l[i:i+n]
@@ -34,9 +33,6 @@ def parse(f):
     chunked = list(chunks(flat_points_list, 8))
     xmlDoc = xmlParser.parse(f)
     rootElement = xmlDoc.getroot()
-    for name in root.findall(".//bndbox/x0"):
-        x0 = name.text
-        print("x0: ", x0)
     for name in root.findall(".//bndbox/x0"):
         x0 = name.text
         x0_cp = name.text
