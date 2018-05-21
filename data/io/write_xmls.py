@@ -27,7 +27,6 @@ def XML(imagename, boxCoords, imageShape):
     filename.text = imagename + '.jpg'
     path = SubElement(top, 'path')
     path.text= 'JPEGImages/'+imagename+ '.jpg'
-
     for boxCoord in boxCoords:
         objects = SubElement(top, 'object')
         name = SubElement(objects,'name')
@@ -67,48 +66,47 @@ def XML(imagename, boxCoords, imageShape):
     tree = ET.ElementTree(top)
     tree.write(args.outpath+imagename+".xml")
     return tree
-
 def order_points(pts):
-	# sort the points based on their x-coordinates
-	xSorted = sorted(pts,key=itemgetter(0))
-	print(xSorted)
-    
-	# grab the left-most and right-most points from the sorted
-	# x-roodinate points
-	
-	leftMost = xSorted[:2]
-	rightMost = xSorted[2:]
-	print("leftMost: ", leftMost, "rightMost: ", rightMost)
- 
-	# now, sort the left-most coordinates according to their
-	# y-coordinates so we can grab the top-left and bottom-left
-	# points, respectively
-	leftMost = sorted(leftMost,key=itemgetter(1))
-	print("leftMost sorted: ", leftMost)
-	(tl, bl) = leftMost
- 
-	# now that we have the top-left coordinate, use it as an
-	# anchor to calculate the Euclidean distance between the
-	# top-left and right-most points; by the Pythagorean
-	# theorem, the point with the largest distance will be
-	# our bottom-right point
-	tl = np.asarray(tl)
-	print(tl.shape)
-	D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
-	rightMost = np.asarray(rightMost)
-	(br, tr) = rightMost[np.argsort(D)[::-1], :]
- 
-	# return the coordinates in top-left, top-right,
-	# bottom-right, and bottom-left order
-	
-	orderedPts = np.array([tl, tr, br, bl], dtype="float32")
-	
-	flat_points_list = [item for sublist in orderedPts for item in sublist]
-	print(flat_points_list)
-	flat_points_list = [int(i) for i in flat_points_list]
-	print(flat_points_list)
-	return flat_points_list
+        # sort the points based on their x-coordinates
+        xSorted = sorted(pts,key=itemgetter(0))
+        print(xSorted)
 
+        # grab the left-most and right-most points from the sorted
+        # x-roodinate points
+
+        leftMost = xSorted[:2]
+        rightMost = xSorted[2:]
+        print("leftMost: ", leftMost, "rightMost: ", rightMost)
+
+        # now, sort the left-most coordinates according to their
+        # y-coordinates so we can grab the top-left and bottom-left
+        # points, respectively
+        leftMost = sorted(leftMost,key=itemgetter(1))
+        print("leftMost sorted: ", leftMost)
+        (tl, bl) = leftMost
+
+        # now that we have the top-left coordinate, use it as an
+        # anchor to calculate the Euclidean distance between the
+        # top-left and right-most points; by the Pythagorean
+        # theorem, the point with the largest distance will be
+        # our bottom-right point
+        tl = np.asarray(tl)
+        print(tl.shape)
+        D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
+        rightMost = np.asarray(rightMost)
+        (br, tr) = rightMost[np.argsort(D)[::-1], :]
+
+        # return the coordinates in top-left, top-right,
+        # bottom-right, and bottom-left order
+
+        orderedPts = np.array([tl, tr, br, bl], dtype="float32")
+
+        flat_points_list = [item for sublist in orderedPts for item in sublist]
+        print(flat_points_list)
+        flat_points_list = [int(i) for i in flat_points_list]
+        print(flat_points_list)
+        return flat_points_list
+                               
 def getInfo(f):
     filename_split = os.path.splitext(f)
     filename_zero, fileext = filename_split
@@ -137,14 +135,14 @@ def getInfo(f):
     img_shape = [img_height, img_width, img_depth]
     filename = basename
     return filename, ordered_points_list, img_shape
-    
+
 
 def run(f):
     imagename, boxCoords, imageShape = getInfo(f)
     XML(imagename, boxCoords, imageShape)
     return
-    
+
 for f in glob.glob('./Annotations/'+'*.xml'):
     run(f)
 
- 
+
