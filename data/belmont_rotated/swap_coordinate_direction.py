@@ -92,5 +92,5 @@ def parse(f):
     tree.write(outpath+basename+'.xml')
     return chunked
 
-for f in glob.glob('./Annotations_full/'+'*.xml'):
+for f in glob.glob('./Annotations/'+'*.xml'):
     parse(f)
