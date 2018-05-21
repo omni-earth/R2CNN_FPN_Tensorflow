@@ -42,8 +42,8 @@ VOCdevkit
 
 Clone the repository    
   ```Shell    
-  cd $R2CNN_ROOT/data/io/  
-  python convert_data_to_tfrecord.py --VOC_dir='***/VOCdevkit/VOCdevkit_train/' --save_name='train' --img_format='.jpg' --dataset='ship'
+  cd $R2CNN_ROOT/data/io/belmont_rotated/  
+  python convert_data_to_tfrecord.py --VOC_dir='./' --save_name='train' --img_format='.jpg' --dataset='building'
        
   ``` 
 # Demo   
@@ -111,26 +111,4 @@ elif you want to train R2CNN:
 
 # Graph
 ![04](graph.png) 
-
-# icdar2015 test results      
-![19](tools/test_result/img_108.jpg_horizontal_fpn.jpg)     
-![20](tools/test_result/img_108.jpg_rotate_fpn.jpg)    
-
-![21](tools/test_result/img_51.jpg_horizontal_fpn.jpg)     
-![22](tools/test_result/img_51.jpg_rotate_fpn.jpg)    
-
-![23](tools/test_result/img_403.jpg_horizontal_fpn.jpg)     
-![24](tools/test_result/img_403.jpg_rotate_fpn.jpg)    
-
-# Test results     
-![11](tools/test_result/07_horizontal_gt.jpg)   
-![12](tools/test_result/07_horizontal_fpn.jpg)   
-     
-![13](tools/test_result/07_rotate_gt.jpg)   
-![14](tools/test_result/07_rotate_fpn.jpg)  
-
-![15](tools/test_result/08_horizontal_gt.jpg)    
-![16](tools/test_result/08_horizontal_fpn.jpg)   
-     
-![17](tools/test_result/08_rotate_gt.jpg)    
-![18](tools/test_result/08_rotate_fpn.jpg)     
+    
