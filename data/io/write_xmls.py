@@ -143,7 +143,6 @@ def getInfo(f):
     return filename, ordered_points_list, img_shape
 
 
-
 def run(f):
     imagename, boxCoords, imageShape = getInfo(f)
     XML(imagename, boxCoords, imageShape)
