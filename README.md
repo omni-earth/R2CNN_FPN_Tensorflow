@@ -24,7 +24,7 @@ You can also use docker environment, command: docker pull yangxue2docker/tensorf
 # Installation      
   Clone the repository    
   ```Shell    
-  git clone https://github.com/omni-earth/R2CNN_FPN_Tensorflow/  
+  git clone https://github.com/omni-earth/R2CNN_FPN_Tensorflow.git
   ```     
 
 # Make tfrecord   
