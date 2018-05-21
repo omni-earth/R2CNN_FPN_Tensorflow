@@ -10,7 +10,12 @@ from xml.dom import minidom
 import untangle
 import xmltodict
 import json
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--outpath', '-p', help="path for rewritten annotations")
+
+args = parser.parse_args()
 
 def parse(f):
     tree = ET.ElementTree(file=f)
@@ -18,7 +23,7 @@ def parse(f):
     filename_split = os.path.splitext(f)
     filename_zero, fileext = filename_split
     basename = os.path.basename(filename_zero)
-    outpath = './rewrite_annos/'
+    outpath = args.outpath
     def chunks(l, n):
         for i in range(0, len(l), n):
             yield l[i:i+n]
