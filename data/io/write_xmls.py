@@ -145,6 +145,6 @@ def run(f):
     return
     
 for f in glob.glob('./Annotations/'+'*.xml'):
-    parse(f)
+    run(f)
 
  
