@@ -34,6 +34,7 @@ def train():
                            batch_size=cfgs.BATCH_SIZE,
                            shortside_len=cfgs.SHORT_SIDE_LEN,
                            is_training=True)
+            print("img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch: ", img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch)
             gtboxes_and_label = tf.py_func(back_forward_convert,
                                            inp=[tf.squeeze(gtboxes_and_label_batch, 0)],
                                            Tout=tf.float32)
@@ -124,8 +125,8 @@ def train():
                                               use_dropout=cfgs.USE_DROPOUT,
                                               weight_decay=cfgs.WEIGHT_DECAY[cfgs.NET_NAME],
                                               is_training=True,
-                                              level=cfgs.LEVEL)
-
+                                              level=cfgs.LEVEL) 
+        print("fast_rcnn: ", fast_rcnn)
         fast_rcnn_decode_boxes, fast_rcnn_score, num_of_objects, detection_category, \
         fast_rcnn_decode_boxes_rotate, fast_rcnn_score_rotate, num_of_objects_rotate, detection_category_rotate = \
             fast_rcnn.fast_rcnn_predict()
@@ -246,10 +247,11 @@ def train():
                     summary_writer.flush()
 
                 if (step > 0 and step % 1000 == 0) or (step == cfgs.MAX_ITERATION - 1):
-                    save_dir = os.path.join(FLAGS.trained_checkpoint, cfgs.VERSION)
+                    #save_dir = os.path.join(FLAGS.trained_checkpoint, cfgs.VERSION)
+                    save_dir = os.path.join(FLAGS.trained_checkpoint, cfgs.VERSION+"_buildings")
                     mkdir(save_dir)
 
-                    save_ckpt = os.path.join(save_dir, 'voc_'+str(_global_step)+'model.ckpt')
+                    save_ckpt = os.path.join(save_dir, 'belmont_voc_v1_600plus_shortside600_step_'+str(_global_step)+'model.ckpt')
                     saver.save(sess, save_ckpt)
                     print(' weights had been saved')
 

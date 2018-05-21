@@ -20,7 +20,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 def get_restorer():
 
     checkpoint_path = tf.train.latest_checkpoint(os.path.join(FLAGS.trained_checkpoint, cfgs.VERSION))
-
+    print("model restore from pretrained mode, path is :", checkpoint_path)
     if checkpoint_path != None:
         if RESTORE_FROM_RPN:
             print('___restore from rpn___')
