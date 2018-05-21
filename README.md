@@ -56,13 +56,13 @@ Clone the repository
  ```
  
 # Train   
-1、Modify $R2CNN_ROOT/libs/lable_name_dict/***_dict.py, corresponding to the number of categories in the configuration file    
-2、download pretrain weight([resnet_v1_101_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_101_2016_08_28.tar.gz) or [resnet_v1_50_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz)) from [here](https://github.com/yangxue0827/models/tree/master/slim), then extract to folder $R2CNN_ROOT/data/pretrained_weights    
-3、  
+1. Modify $R2CNN_ROOT/libs/lable_name_dict/***_dict.py, corresponding to the number of categories in the configuration file    
+2. download pretrain weight([resnet_v1_101_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_101_2016_08_28.tar.gz) or [resnet_v1_50_2016_08_28.tar.gz](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz)) from [here](https://github.com/yangxue0827/models/tree/master/slim), then extract to folder $R2CNN_ROOT/data/pretrained_weights    
+3.  
   ```Shell    
   cd $R2CNN_ROOT/tools      
   ``` 
-4、Choose a model([FPN](https://github.com/yangxue0827/FPN_Tensorflow)  and R2CNN)     
+4. Choose a model([FPN](https://github.com/yangxue0827/FPN_Tensorflow)  and R2CNN)     
 If you want to train [FPN](https://github.com/yangxue0827/FPN_Tensorflow) :        
   ```Shell    
   python train.py   
@@ -74,9 +74,8 @@ elif you want to train R2CNN:
   ``` 
 
 # Infer   
-1、Unzip the weight $R2CNN_ROOT/output/res101_trained_weights/*.rar    
-2、put images in $R2CNN_ROOT/tools/inference_image   
-3、Configure parameters in $R2CNN_ROOT/libs/configs/cfgs.py and modify the project's root directory    
+1. Trained weights are stored in $R2CNN_ROOT/output/res101_trained_weights/v5/   
+2. put images for inference in $R2CNN_ROOT/tools/inference_image      
      
   ```Shell    
   cd $R2CNN_ROOT/tools      
