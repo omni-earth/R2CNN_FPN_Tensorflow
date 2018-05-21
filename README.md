@@ -25,6 +25,10 @@ You can also use docker environment, command: docker pull yangxue2docker/tensorf
   ```Shell    
   git clone https://github.com/omni-earth/R2CNN_FPN_Tensorflow.git
   ```     
+  ```Shell
+  $R2CNN_ROOT is equivalent to your current working directory where this repo was pulled to,
+  e.g. /mnt/cirrus/models/R2CNN_FPN_Tensorflow/
+  ```
 
 # Make tfrecord     
 The data is VOC format, reference [here](sample.xml)     
