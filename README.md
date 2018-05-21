@@ -44,7 +44,7 @@ Clone the repository
   python convert_data_to_tfrecord.py --VOC_dir='./' --save_name='train' --img_format='.jpg' --dataset='building'
        
   ``` 
- OR for belmont rotated building example 
+ OR just pull this tfrecords example for belmont rotated buildings to $R2CNN_ROOT/data/tfrecords/ 
  ```Shell
  aws s3 cp s3://oe-evp/R2CNN_FPN_Tensorflow/tfrecords/building_top300_051419_successfull10kIter.tfrecord $R2CNN_ROOT/data/tfrecords/ 
  ```
