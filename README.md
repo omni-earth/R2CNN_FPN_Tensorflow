@@ -62,9 +62,9 @@ Clone the repository
   ```Shell    
   cd $R2CNN_ROOT/tools      
   ``` 
-4. Run R2CNN)     
+4. Run R2CNN     
 
-   ```Shell    
+  ```Shell    
   python train1.py   
   ``` 
 
