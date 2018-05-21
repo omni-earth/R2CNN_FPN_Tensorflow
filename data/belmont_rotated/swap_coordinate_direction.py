@@ -31,8 +31,8 @@ def parse(f):
     print("points_list: ", flat_points_list)
     print("chunked: ", list(chunks(flat_points_list, 8)))
     chunked = list(chunks(flat_points_list, 8))
-    xmlDoc = xmlParser.parse(f)
-    rootElement = xmlDoc.getroot()
+    #xmlDoc = xmlParser.parse(f)
+    #rootElement = xmlDoc.getroot()
     for name in root.findall(".//bndbox/x0"):
         x0 = name.text
         x0_cp = name.text
