@@ -124,10 +124,14 @@ def getInfo(f):
         points_list.append(points)
     flat_points_list = [item for sublist in points_list for item in sublist]
     print("points_list: ", flat_points_list)
-    chunked = list(chunks(flat_points_list, 8))
-    print("chunked: ", list(chunks(flat_points_list, 8)))
-    pairs = list(zip(*[iter(chunked)] * 2))
-    ordered_points_list = order_points(pairs)
+    pairs = list(zip(*[iter(flat_points_list)] * 2))
+    chunked = list(chunks(pairs, 4))
+    print("chunked: ", chunked)
+    print("pairs: ", pairs)
+    ordered_points_list = []
+    for chunk in chunked:
+        ordered_points_list_chunk = order_points(chunk)
+        ordered_points_list.append(ordered_points_list_chunk)
     img_height = tree.find('.//height').text
     img_width = tree.find('.//width').text
     img_depth = tree.find('.//depth').text
@@ -135,6 +139,7 @@ def getInfo(f):
     img_shape = [img_height, img_width, img_depth]
     filename = basename
     return filename, ordered_points_list, img_shape
+
 
 
 def run(f):
