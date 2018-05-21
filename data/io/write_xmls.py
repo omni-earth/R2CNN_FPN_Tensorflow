@@ -138,6 +138,8 @@ def getInfo(f):
     print("image shape: ", img_height, img_width, img_depth)
     img_shape = [img_height, img_width, img_depth]
     filename = basename
+    print("original points list: ", chunked)
+    print("ordered_points_list: ", ordered_points_list)
     return filename, ordered_points_list, img_shape
 
 
