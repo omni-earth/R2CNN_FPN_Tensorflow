@@ -85,10 +85,10 @@ def next_batch(dataset_name, batch_size, shortside_len, is_training):
         tf.train.batch(
                        [img_name, img, gtboxes_and_label, num_obs],
                        batch_size=batch_size,
-                       #capacity=100,
-                       capacity=10,
-                       #num_threads=16,
-                       num_threads=2,
+                       capacity=100,
+                       #capacity=10,
+                       num_threads=16,
+                       #num_threads=2,
                        dynamic_pad=True)
     return img_name_batch, img_batch, gtboxes_and_label_batch, num_obs_batch
 
