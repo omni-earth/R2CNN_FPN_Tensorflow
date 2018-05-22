@@ -18,7 +18,6 @@ parser.add_argument('--outpath', '-p', help="path for rewritten annotations")
 
 args = parser.parse_args()
 
-
 def XML(imagename, boxCoords, imageShape):
     top = Element('Annotation')
     folder = SubElement(top,'folder')
@@ -54,7 +53,6 @@ def XML(imagename, boxCoords, imageShape):
         grandchild7.text = str(boxCoord[6])
         grandchild8 = SubElement(secondchild, 'y3')
         grandchild8.text = str(boxCoord[7])
-
     size = SubElement(top,'size')
     width = SubElement(size, 'width')
     width.text = str(imageShape[1])
@@ -66,6 +64,7 @@ def XML(imagename, boxCoords, imageShape):
     tree = ET.ElementTree(top)
     tree.write(args.outpath+imagename+".xml")
     return tree
+
 def order_points(pts):
         # sort the points based on their x-coordinates
         xSorted = sorted(pts,key=itemgetter(0))
@@ -141,7 +140,6 @@ def getInfo(f):
     print("original points list: ", chunked)
     print("ordered_points_list: ", ordered_points_list)
     return filename, ordered_points_list, img_shape
-
 
 def run(f):
     imagename, boxCoords, imageShape = getInfo(f)
