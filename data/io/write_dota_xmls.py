@@ -28,12 +28,12 @@ def XML(imagename, boxCoords, imageShape, names):
     filename.text = imagename + '.jpg'
     path = SubElement(top, 'path')
     path.text= 'JPEGImages/'+imagename+ '.jpg'
-    for boxCoord, name in zip(boxCoords, names):
+    for boxCoord, objname in zip(boxCoords, names):
         print("boxCoord: ", boxCoord)
         print("name: ", name)
         objects = SubElement(top, 'object')
         name = SubElement(objects,'name')
-        name.text=str(name)
+        name.text=str(objname)
         pose = SubElement(objects,'pose')
         pose.text='Unknown'
         truncated = SubElement(objects,'truncated')
