@@ -30,6 +30,9 @@ def XML(imagename, boxCoords, imageShape, names):
     path.text= 'JPEGImages/'+imagename+ '.jpg'
     for boxCoord, objname in zip(boxCoords, names):
         print("boxCoord: ", boxCoord)
+        objname = str(objname)
+        objname = objname.strip("[]")
+        objname = objname.replace("'", "")
         print("name: ", objname)
         objects = SubElement(top, 'object')
         name = SubElement(objects,'name')
