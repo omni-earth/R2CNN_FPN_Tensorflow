@@ -87,13 +87,9 @@ def getInfo(f):
             line = line.rstrip('\n')
             line = line.rstrip('\r')
             lines.append(line)
-    #f = f.replace(' ', ',')
-    #lines = f.split(',')
     lines  = ''.join(map(str, lines))
     lines = [i for i in lines.split()]
     print("lines: ", lines)
-#    for line in lines:
-#        print("line: ", line)
     print("file header: ", lines[0:2])
     print("sample set of boxes: ", lines[3:10])
     def chunks(l, n):
@@ -103,8 +99,6 @@ def getInfo(f):
     names = []
     lines = list(chunks(lines, 9))
     for bbox in lines:
-        #re.sub("\s+", ",", bbox.strip())
-        #bbox = list(bbox)
         points = bbox[0:8]
         print("points: ", points)
         points_list.append(points)
