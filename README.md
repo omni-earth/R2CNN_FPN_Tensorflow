@@ -16,7 +16,7 @@ If you find R-DFPN useful in your research, please consider citing:
     }  
 
 # Configuration Environment
-ubuntu(Encoding problems may occur on windows) + python2 + tensorflow1.2 (GPU version) + cv2 + cuda8.0 + GeForce GTX 1080   
+ubuntu16.04 + python2 + tensorflow1.2 (GPU version) + cv2 + cuda8.0 + GeForce GTX 1080   
 ```pip install tensorflow-gpu==1.2```
 
 If you want to use cpu, you need to modify the parameters of NMS and IOU functions use_gpu = False  in cfgs.py     
