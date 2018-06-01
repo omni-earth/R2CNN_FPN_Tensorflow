@@ -29,12 +29,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = cfgs.GPU_GROUP
 def train():
     with tf.Graph().as_default():
         with tf.name_scope('get_batch'):
-            img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch = \
+            img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch, num_batches = \
                 next_batch(dataset_name=cfgs.DATASET_NAME,
                            batch_size=cfgs.BATCH_SIZE,
                            shortside_len=cfgs.SHORT_SIDE_LEN,
                            is_training=True)
-            print("img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch: ", img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch)
+            print("img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch, num_batches: ", img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch, num_batches)
             gtboxes_and_label = tf.py_func(back_forward_convert,
                                            inp=[tf.squeeze(gtboxes_and_label_batch, 0)],
                                            Tout=tf.float32)
@@ -152,9 +152,22 @@ def train():
 
         global_step = slim.get_or_create_global_step()
 
+        #lr = tf.train.piecewise_constant(global_step,
+        #                                 boundaries=[np.int64(20000), np.int64(40000)],
+        #                                 values=[cfgs.LR, cfgs.LR/10, cfgs.LR/100])
+        
+        num_epochs = int(cfgs.MAX_ITERATION)/int(num_batches)
+        print("num_epochs: ", num_epochs)
+
+        num_epochs_intervals = list(range(int(num_epochs)))
+        print("num_epochs_intervals: ", num_epochs_intervals)
+
         lr = tf.train.piecewise_constant(global_step,
-                                         boundaries=[np.int64(20000), np.int64(40000)],
-                                         values=[cfgs.LR, cfgs.LR/10, cfgs.LR/100])
+                                         boundaries=[np.int64(num_batches*num_epochs_intervals[1]), np.int64(num_batches*num_epochs_intervals[3]), np.int64(num_batches*num_epochs_intervals[5]), np.int64(num_batches*num_epochs_intervals[7]), np.int64(num_batches*num_epochs_intervals[9]), np.int64(num_batches*num_epochs_intervals[11])],
+                                         values=[cfgs.LR, cfgs.LR/10, cfgs.LR/100, cfgs.LR/1000, cfgs.LR/10000, cfgs.LR/100000])
+
+
+
         tf.summary.scalar('lr', lr)
         optimizer = tf.train.MomentumOptimizer(lr, momentum=cfgs.MOMENTUM)
 
