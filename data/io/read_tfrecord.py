@@ -90,5 +90,8 @@ def next_batch(dataset_name, batch_size, shortside_len, is_training):
                        num_threads=16,
                        #num_threads=2,
                        dynamic_pad=True)
-    return img_name_batch, img_batch, gtboxes_and_label_batch, num_obs_batch
+        
+    num_batches = sum([1 for r in tf.python_io.tf_record_iterator(os.path.join('../data/tfrecords', dataset_name + '_train.tfrecord'))])
+
+    return img_name_batch, img_batch, gtboxes_and_label_batch, num_obs_batch, num_batches
 
