@@ -231,11 +231,11 @@ def train():
                 _global_step, _img_name_batch, _rpn_location_loss, _rpn_classification_loss, \
                 _rpn_total_loss, _fast_rcnn_location_loss, _fast_rcnn_classification_loss, \
                 _fast_rcnn_location_rotate_loss, _fast_rcnn_classification_rotate_loss, \
-                _fast_rcnn_total_loss, _total_loss, _ = \
+                _fast_rcnn_total_loss, _total_loss, _lr, _ = \
                     sess.run([global_step, img_name_batch, rpn_location_loss, rpn_classification_loss,
                               rpn_total_loss, fast_rcnn_location_loss, fast_rcnn_classification_loss,
                               fast_rcnn_location_rotate_loss, fast_rcnn_classification_rotate_loss,
-                              fast_rcnn_total_loss, total_loss, train_op])
+                              fast_rcnn_total_loss, total_loss, lr, train_op])
 
                 end = time.time()
 
@@ -247,12 +247,12 @@ def train():
                                 fast_rcnn_loc_loss:{} |\t fast_rcnn_cla_loss:{} |\t
                                 fast_rcnn_loc_rotate_loss:{} |\t fast_rcnn_cla_rotate_loss:{} |\t
                                 fast_rcnn_total_loss:{} |\t
-                                total_loss:{} |\t pre_cost_time:{}s""" \
+                                total_loss:{} |\t pre_cost_time:{}s |\t learning_rate:{}s""" \
                           .format(training_time, _global_step, str(_img_name_batch[0]), _rpn_location_loss,
                                   _rpn_classification_loss, _rpn_total_loss, _fast_rcnn_location_loss,
                                   _fast_rcnn_classification_loss, _fast_rcnn_location_rotate_loss,
                                   _fast_rcnn_classification_rotate_loss,  _fast_rcnn_total_loss, _total_loss,
-                                  (end - start)))
+                                  (end - start), _lr))
 
                 if step % 50 == 0:
                     summary_str = sess.run(summary_op)
