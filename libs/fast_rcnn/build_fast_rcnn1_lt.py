@@ -161,7 +161,7 @@ def order_points(pts):
             print("ordered_points_list: ", ordered_points_list)
         return np.array(boxes_ordered, dtype=np.float32)
     else:
-        return np.array([0, 0, 0, 0, 0], dtype=np.float32)
+        return np.array([], dtype=np.float32)
         
         
 class FastRCNN(object):
