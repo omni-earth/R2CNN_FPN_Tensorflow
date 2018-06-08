@@ -92,19 +92,20 @@ def order_points(pts):
                 del flat_points_list[5-1::5]
                 print("points_list: ", flat_points_list)
                 flat_points_array = np.array(flat_points_list)
-                chunked = chunks1(flat_points_list, 4)
+                boxes = []
+                for rect in coordinates:
+                    box = cv2.boxPoints(((rect[1], rect[0]), (rect[3], rect[2]), rect[4]))
+                    box = np.reshape(box, [-1, ])
+                    boxes.append([box[0], box[1], box[2], box[3], box[4], box[5], box[6], box[7]])
+                flat_points_list = [item for sublist in boxes for item in sublist]
+                chunked = chunks1(flat_points_list, 8)
                 chunked_with_angle = chunks1(flat_points_list_angle, 5)
                 print("multi-box chunked: ", chunked)
 
                 ordered_points_list = []
-                chunk_expand_list = []
                 ordered_points_list_minmax = []
                 for chunk in chunked:
-                    ymin, xmin, ymax, xmax = chunk[0], chunk[1], chunk[2], chunk[3]
-                    print("chunk ymin, xmin, ymax, xmax: ", ymin, xmin, ymax, xmax)
-                    chunk_expand = [xmin, ymax, xmax, ymax, xmax, ymin, xmin, ymin]
-                    chunk_expand_list.append(chunk_expand)
-                    pairs = list(zip(*[iter(chunk_expand)] * 2))
+                    pairs = list(zip(*[iter(chunk)] * 2))
                     ordered_points_list_chunk = order_points(pairs)
                     ordered_points_list.append(ordered_points_list_chunk)
                     ymin1 = min(ordered_points_list_chunk[5], ordered_points_list_chunk[7])
@@ -113,6 +114,16 @@ def order_points(pts):
                     xmax1 = max(ordered_points_list_chunk[2], ordered_points_list_chunk[4])
                     ordered_points_list_chunk_minmax = [ymin1, xmin1, ymax1, xmax1]
                     ordered_points_list_minmax.append(ordered_points_list_chunk_minmax)
+
+                boxes_ordered = []
+                for rect in ordered_points_list:
+                    box = np.int0(rect)
+                    box = box.reshape([4, 2])
+                    rect1 = cv2.minAreaRect(box)
+
+                    x, y, w, h, theta = rect1[0][0], rect1[0][1], rect1[1][0], rect1[1][1], rect1[2]
+                    boxes_ordered.append([y, x, h, w, theta])
+
                 for chunk1, chunk0, chunk_mm in zip(ordered_points_list, chunked_with_angle, ordered_points_list_minmax):
                     print("ordered_points_list chunk: ", chunk1)
                     print("angle: ", chunk0[-1])
@@ -136,7 +147,6 @@ def order_points(pts):
                     ordered_points_list_chunk = order_points(pairs)
                     ordered_points_list.append(ordered_points_list_chunk)
             print("original points list: ", coordinates)
-            print("expanded points list: ", chunk_expand_list)
             print("ordered_points_list: ", ordered_points_list)
             print("ordered_points_list_minmax: ", ordered_points_list_minmax)
         else:
@@ -149,7 +159,7 @@ def order_points(pts):
             print("original points list: ", coordinates)
             print("expanded points list: ", chunk_expand)
             print("ordered_points_list: ", ordered_points_list)
-        return np.array(ordered_points_list_minmax, dtype=np.float32)
+        return np.array(boxes_ordered, dtype=np.float32)
     else:
         return np.array([0, 0, 0, 0, 0], dtype=np.float32)
         
