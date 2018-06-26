@@ -150,7 +150,7 @@ def augment_keypoints(keypoints, img):
         x_old, y_old = keypoint_old.x, keypoint_old.y
         x_new, y_new = keypoint.x, keypoint.y
         #print("[Keypoints for image #%s] before aug: x=%s y=%s | after aug: x=%s y=%s" % (img, x_old, y_old, x_new, y_new))
-        new_pair = (x_new, y_new)
+        new_pair = (int(x_new), int(y_new))
         new_coords.append(new_pair)
     print("new_coords: ", new_coords)
     return new_coords
