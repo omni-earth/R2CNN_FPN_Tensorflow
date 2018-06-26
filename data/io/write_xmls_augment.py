@@ -144,6 +144,11 @@ def augment_keypoints(keypoints, img):
         #print("Keypoint %d: (%.8f, %.8f) -> (%.8f, %.8f)" % (i, before.x, before.y, after.x, after.y))
     print("keypoints_aug: ", keypoints_aug)
     # EXAMPLE keypoints_aug:  KeypointsOnImage([Keypoint(x=133.97109763, y=160.27852505), Keypoint(x=478.65381118, y=221.05538723), Keypoint(x=406.93711380, y=627.78098922), Keypoint(x=62.25440025, y=567.00412704)], shape=(768, 768, 3))
+    for kp_idx, keypoint in enumerate(keypoints_aug.keypoints):
+        keypoint_old = kpts.keypoints[kp_idx]
+        x_old, y_old = keypoint_old.x, keypoint_old.y
+        x_new, y_new = keypoint.x, keypoint.y
+        #print("[Keypoints for image #%s] before aug: x=%s y=%s | after aug: x=%s y=%s" % (img, x_old, y_old, x_new, y_new))
     return keypoints_aug
   
 def getInfo(f):
