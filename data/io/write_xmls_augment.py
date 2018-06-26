@@ -129,7 +129,7 @@ def augment_img(img):
 
 def augment_keypoints(keypoints, img):
     ia.seed(1)
-    seq = iaa.Sequential([iaa.Affine(rotate=10)]) # rotate by exactly 10deg and scale to 50-70%, affects keypoints
+    seq = iaa.Sequential([iaa.Affine(rotate=10)]) # rotate by exactly 10deg
     seq_det = seq.to_deterministic()
     kpts = ia.KeypointsOnImage([
         ia.Keypoint(x=keypoints[0], y=keypoints[1]),
@@ -137,19 +137,23 @@ def augment_keypoints(keypoints, img):
         ia.Keypoint(x=keypoints[4], y=keypoints[5]),
         ia.Keypoint(x=keypoints[6], y=keypoints[7])
     ], shape=img.shape)
+    #keypoints_list.append(kpts)
     keypoints_aug = seq_det.augment_keypoints([kpts])[0]
     for i in range(len(kpts.keypoints)):
         before = kpts.keypoints[i]
         after = keypoints_aug.keypoints[i]
         #print("Keypoint %d: (%.8f, %.8f) -> (%.8f, %.8f)" % (i, before.x, before.y, after.x, after.y))
     print("keypoints_aug: ", keypoints_aug)
-    # EXAMPLE keypoints_aug:  KeypointsOnImage([Keypoint(x=133.97109763, y=160.27852505), Keypoint(x=478.65381118, y=221.05538723), Keypoint(x=406.93711380, y=627.78098922), Keypoint(x=62.25440025, y=567.00412704)], shape=(768, 768, 3))
+    new_coords = []
     for kp_idx, keypoint in enumerate(keypoints_aug.keypoints):
         keypoint_old = kpts.keypoints[kp_idx]
         x_old, y_old = keypoint_old.x, keypoint_old.y
         x_new, y_new = keypoint.x, keypoint.y
         #print("[Keypoints for image #%s] before aug: x=%s y=%s | after aug: x=%s y=%s" % (img, x_old, y_old, x_new, y_new))
-    return keypoints_aug
+        new_pair = (x_new, y_new)
+        new_coords.append(new_pair)
+    print("new_coords: ", new_coords)
+    return new_coords
   
 def getInfo(f):
     filename_split = os.path.splitext(f)
@@ -170,14 +174,17 @@ def getInfo(f):
     print("points_list: ", flat_points_list)
     img = "JPEGImages_augment/"+basename+'.jpg'
     img_aug = augment_img(img)
-    flat_points_aug_list = augment_keypoints(flat_points_list, img_aug)
-    pairs = list(zip(*[iter(flat_points_aug_list)] * 2))
+    pairs = list(zip(*[iter(flat_points_list)] * 2))
     chunked = list(chunks(pairs, 4))
     print("chunked: ", chunked)
     print("pairs: ", pairs)
+    #img_aug, chunked_points_aug_list = augment(f, chunked)
     ordered_points_list = []
     for chunk in chunked:
-        ordered_points_list_chunk = order_points(chunk)
+        flat_points_list_chunk = [item for sublist in chunk for item in sublist]
+        flat_points_aug_list_chunk = augment_keypoints(flat_points_list_chunk, img_aug)
+        print("flat_points_aug_list_chunk: ", flat_points_aug_list_chunk)
+        ordered_points_list_chunk = order_points(flat_points_aug_list_chunk)
         ordered_points_list.append(ordered_points_list_chunk)
     img_shape = img_aug.shape
     print("image shape: ", img_shape)
