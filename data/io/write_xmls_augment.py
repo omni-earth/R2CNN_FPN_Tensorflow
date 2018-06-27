@@ -192,6 +192,39 @@ def getInfo(f):
     print("original points list: ", chunked)
     print("ordered_points_list: ", ordered_points_list)
     filename_aug = filename+'_rotate10'
+    
+    xSorted = sorted(pairs,key=itemgetter(0))
+    xSorted_extract = [i[0] for i in xSorted]
+    xmin = int(min(xSorted_extract))
+    xmax = int(max(xSorted_extract))
+    ySorted = sorted(pairs,key=itemgetter(1))
+    ySorted_extract = [i[1] for i in ySorted]
+    ymin = int(min(ySorted_extract))
+    ymax = int(min(ySorted_extract))
+
+    img_xmin = 0
+    img_xmax = img_shape[0]
+    img_ymin = 0
+    img_ymax = img_shape[1]
+
+    print("xmin, xmax, ymin, ymax: ", xmin, xmax, ymin, ymax)
+    print("img_xmin, img_xmax, img_ymin, img_ymax: ", img_xmin, img_xmax, img_ymin, img_ymax)
+
+    #out_of_bounds = []
+
+    if xmin < img_xmin:
+        out_of_bounds.append(filename_aug)
+        print("box off frame for file: ", filename_aug)
+    elif xmax > img_xmax:
+        out_of_bounds.append(filename_aug)
+        print("box off frame for file: ", filename_aug)
+    elif ymin < img_ymin:
+        out_of_bounds.append(filename_aug)
+        print("box off frame for file: ", filename_aug)
+    elif ymax > img_ymax:
+        out_of_bounds.append(filename_aug)
+        print("box off frame for file: ", filename_aug)
+    
     return filename_aug, ordered_points_list, img_shape
 
 def run(f):
@@ -199,5 +232,12 @@ def run(f):
     XML(imagename, boxCoords, imageShape)
     return
     
+out_of_bounds = []
+
 for f in glob.glob('./Annotations_augment/'+'*.xml'):
     run(f)
+
+#print("out_of_bounds: ", out_of_bounds)
+out_of_bounds_outfile = open('out_of_bounds.txt', 'w')
+for item in out_of_bounds:
+    out_of_bounds_outfile.write("%s\n" % item)
