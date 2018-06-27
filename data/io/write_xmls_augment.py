@@ -207,10 +207,8 @@ def getInfo(f):
     img_ymin = 0
     img_ymax = img_shape[1]
 
-    print("xmin, xmax, ymin, ymax: ", xmin, xmax, ymin, ymax)
-    print("img_xmin, img_xmax, img_ymin, img_ymax: ", img_xmin, img_xmax, img_ymin, img_ymax)
-
-    #out_of_bounds = []
+    #print("xmin, xmax, ymin, ymax: ", xmin, xmax, ymin, ymax)
+    #print("img_xmin, img_xmax, img_ymin, img_ymax: ", img_xmin, img_xmax, img_ymin, img_ymax)
 
     if xmin < img_xmin:
         out_of_bounds.append(filename_aug)
