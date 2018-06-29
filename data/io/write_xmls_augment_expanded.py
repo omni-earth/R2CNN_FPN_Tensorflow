@@ -226,7 +226,7 @@ def getInfo(f, d):
     return filename_aug, ordered_points_list, img_shape
 
 def run(f):
-    for d in [x for x in range(370) if x % 10 == 0]:
+    for d in [x for x in range(370) if x % 10 == 0][1:]:
         imagename, boxCoords, imageShape = getInfo(f, d)
         XML(imagename, boxCoords, imageShape, d)
     return
