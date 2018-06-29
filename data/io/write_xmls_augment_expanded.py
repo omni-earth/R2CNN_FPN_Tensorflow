@@ -26,7 +26,7 @@ parser.add_argument('--outpath', '-p', help="path for rewritten annotations")
 
 args = parser.parse_args()
 
-def XML(imagename, boxCoords, imageShape):
+def XML(imagename, boxCoords, imageShape, d):
     top = Element('Annotation')
     folder = SubElement(top,'folder')
     folder.text = 'VOC2020'
@@ -70,7 +70,7 @@ def XML(imagename, boxCoords, imageShape):
     depth.text = str(3)
     #    print(prettify(top))
     tree = ET.ElementTree(top)
-    tree.write(args.outpath+imagename+"_rotate10.xml")
+    tree.write(args.outpath+imagename+"_rotate"+str(d)+".xml")
     return tree
 
 def order_points(pts):
@@ -109,7 +109,7 @@ def order_points(pts):
         orderedPts = np.array([tl, tr, br, bl], dtype="float32")
 
         flat_points_list = [item for sublist in orderedPts for item in sublist]
-                print(flat_points_list)
+        print(flat_points_list)
         flat_points_list = [int(i) for i in flat_points_list]
         print(flat_points_list)
         return flat_points_list
@@ -228,7 +228,7 @@ def getInfo(f, d):
 def run(f):
     for d in [x for x in range(370) if x % 10 == 0]:
         imagename, boxCoords, imageShape = getInfo(f, d)
-    XML(imagename, boxCoords, imageShape)
+        XML(imagename, boxCoords, imageShape, d)
     return
     
 out_of_bounds = []
