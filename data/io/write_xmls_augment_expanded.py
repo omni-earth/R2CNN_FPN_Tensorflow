@@ -170,7 +170,7 @@ def getInfo(f, d):
         points = [name.text]
         #print("points: ", points)
         points_list.append(points)
-    flat_points_list = [item for sublist in points_list for item in sublist]
+    flat_points_list = [int(item) for sublist in points_list for item in sublist]
     print("points_list: ", flat_points_list)
     img = "JPEGImages_augment/"+basename+'.jpg'
     img_aug = augment_img(img, d)
