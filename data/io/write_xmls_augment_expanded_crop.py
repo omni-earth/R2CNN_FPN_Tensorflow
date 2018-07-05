@@ -1,4 +1,4 @@
-mport numpy as np
+import numpy as np
 import xml.etree.ElementTree as xmlParser
 import xml.etree.cElementTree as ET
 import os, sys, glob
