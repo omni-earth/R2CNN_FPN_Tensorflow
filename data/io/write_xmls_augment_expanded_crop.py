@@ -70,7 +70,7 @@ def XML(imagename, boxCoords, imageShape, d):
     depth.text = str(3)
     #    print(prettify(top))
     tree = ET.ElementTree(top)
-    tree.write(args.outpath+imagename+"_rotate"+str(d)+".xml")
+    tree.write(args.outpath+imagename+"_rotate"+str(d)+"crop75"+".xml")
     return tree
 
 def order_points(pts):
@@ -119,17 +119,17 @@ def augment_img(img, d):
     filename_zero, fileext = filename_split
     basename = os.path.basename(filename_zero)
     img = np.array(Image.open(img))
-    seq = iaa.Sequential([iaa.Affine(rotate=d)]) # rotate by exactly d deg
+    seq = iaa.Sequential([iaa.Affine(rotate=d), iaa.CropAndPad(px=(-75, 0))]) # rotate by exactly d deg
     seq_det = seq.to_deterministic()
     image_aug = seq_det.augment_images([img])[0]
     #image_before = keypoints.draw_on_image(image, size=7)
     #image_after = keypoints_aug.draw_on_image(image_aug, size=7)
-    misc.imsave('JPEGImages_augment/'+basename+'_rotate'+str(d)+'.jpg', image_aug)
+    misc.imsave('JPEGImages_augment/'+basename+'_rotate'+str(d)+'crop75'+'.jpg', image_aug)
     return image_aug
 
 def augment_keypoints(keypoints, img, d):
     ia.seed(1)
-    seq = iaa.Sequential([iaa.Affine(rotate=int(d))]) # rotate by exactly d degrees
+    seq = iaa.Sequential([iaa.Affine(rotate=int(d)), iaa.CropAndPad(px=(-75, 0))]) # rotate by exactly d degrees
     seq_det = seq.to_deterministic()
     kpts = ia.KeypointsOnImage([
         ia.Keypoint(x=keypoints[0], y=keypoints[1]),
