@@ -313,7 +313,8 @@ def getInfo(f, d):
     #print("img_xmin, img_xmax, img_ymin, img_ymax: ", img_xmin, img_xmax, img_ymin, img_ymax)
 
     if xmin < img_xmin:
-        out_of_bounds.append(filename_aug)        print("box off frame for file: ", filename_aug)
+        out_of_bounds.append(filename_aug)        
+        print("box off frame for file: ", filename_aug)
     elif xmax > img_xmax:
         out_of_bounds.append(filename_aug)
         print("box off frame for file: ", filename_aug)
