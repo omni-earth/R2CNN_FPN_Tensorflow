@@ -212,7 +212,7 @@ def back_forward_convert(coordinate, with_label=False):
 
 def crop_minAreaRect(img, rect):
 
-    # rotate img
+    # rotate img 
     angle = rect[2]
     rows,cols = img.shape[0], img.shape[1]
     M = cv2.getRotationMatrix2D((cols/2,rows/2),angle,1)
