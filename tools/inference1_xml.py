@@ -6,7 +6,7 @@ from __future__ import division
 import sys
 sys.path.append('../')
 
-import time
+import time, glob
 from data.io import image_preprocess
 from libs.networks.network_factory import get_network_byname
 from libs.rpn import build_rpn
