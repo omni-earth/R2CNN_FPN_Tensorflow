@@ -220,7 +220,7 @@ def read_reorder(coordinates):
         else:
             print("single box")
             ymin, xmin, ymax, xmax = flat_points_list[0], flat_points_list[1], flat_points_list[2], flat_points_list[3]
-            chunk_expand = list(xmin, ymax, xmax, ymax, xmax, ymin, xmin, ymin)
+            chunk_expand = [xmin, ymax, xmax, ymax, xmax, ymin, xmin, ymin]
             pairs = list(zip(*[iter(chunk_expand)] * 2))
             ordered_points_list = []
             ordered_points_list = [order_points(pairs)]
