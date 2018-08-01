@@ -141,13 +141,26 @@ def main(gt, pred):
     boxes1 = getInfo(gt)
     boxes2 = getInfo(pred)
     
-    boxes1 = back_forward_convert(boxes1, with_label=False)
-    boxes2 = back_forward_convert(boxes2, with_label=False)
+    boxes1 = getInfo(gt)
+    boxes2 = getInfo(pred)
+
+
+    with tf.Graph().as_default():
+        with tf.name_scope('get_boxes'):
+            boxes1 = back_forward_convert(boxes1, with_label=False)
+            boxes2 = back_forward_convert(boxes2, with_label=False)
+            ious = iou_rotate_calculate1(boxes1, boxes2, use_gpu=False)
+
+    init_op = tf.group(
+            tf.global_variables_initializer(),
+            tf.local_variables_initializer())
 
     start = time.time()
+    #myGraph = tf.Graph()
     with tf.Session() as sess:
-        ious = iou_rotate_calculate1(boxes1, boxes2, use_gpu=False)
-        print(sess.run(ious))
+        #ious = iou_rotate_calculate1(boxes1, boxes2, use_gpu=False)
+        #print(sess.run(ious))
+        print(sess.run(init_op))
         print('{}s'.format(time.time() - start))
         return ious
 
