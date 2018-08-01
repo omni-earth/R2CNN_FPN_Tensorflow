@@ -140,10 +140,6 @@ def main(gt, pred):
 
     boxes1 = getInfo(gt)
     boxes2 = getInfo(pred)
-    
-    boxes1 = getInfo(gt)
-    boxes2 = getInfo(pred)
-
 
     with tf.Graph().as_default():
         with tf.name_scope('get_boxes'):
