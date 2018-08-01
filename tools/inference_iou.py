@@ -140,6 +140,9 @@ def main(gt, pred):
 
     boxes1 = getInfo(gt)
     boxes2 = getInfo(pred)
+    
+    boxes1 = back_forward_convert(boxes1, with_label=False)
+    boxes2 = back_forward_convert(boxes2, with_label=False)
 
     start = time.time()
     with tf.Session() as sess:
