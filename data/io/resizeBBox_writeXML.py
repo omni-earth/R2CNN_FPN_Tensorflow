@@ -263,6 +263,7 @@ def read_reorder(filename):
             bbox_resized_list = cvResizeBBs(ordered_points_list, img_shape)
             bbox_resized_list = [bbox_resized_list]
         #return np.array(ordered_points_list, dtype=np.float32), img_shape
+        img_shape = [512,512,3]
         return np.array(bbox_resized_list, dtype=np.float32), img_shape
     else:
         return np.array([], dtype=np.float32), img_shape
