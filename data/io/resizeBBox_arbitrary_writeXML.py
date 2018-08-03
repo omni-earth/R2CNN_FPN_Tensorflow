@@ -44,11 +44,14 @@ from xml.etree import ElementTree
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 import itertools
 
+from PIL import Image
+
 import csv
 import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--convertPath', '-p', help="path for old annotations")
+parser.add_argument('--imgPath', '-i', help="path for old annotations")
 
 args = parser.parse_args()
 
@@ -147,15 +150,16 @@ def order_points(pts):
 
         return flat_points_list
 
-def cvResizeBBs(bb, imShape):
+def cvResizeBBs(bb, imgShapeXML, imgShape):
     # Note: flipped comparing to your original code!
 
-    y_ = int(imShape[0])
-    x_ = int(imShape[1])
+    y_ = int(imgShapeXML[0])
+    x_ = int(imgShapeXML[1])
 
-    targetSize = int(512)
-    x_scale = targetSize / x_
-    y_scale = targetSize / y_
+    targetSizeX = int(imgShape[1])
+    targetSizeY = int(imgShape[0])
+    x_scale = targetSizeX / x_
+    y_scale = targetSizeY / y_
     print(x_scale, y_scale)
 
     # original frame as named values
@@ -185,7 +189,7 @@ def cvResizeBBs(bb, imShape):
     print("resized bbox: ", [x0,y0,x1,y1,x2,y2,x3,y3])
     return np.array([x0,y0,x1,y1,x2,y2,x3,y3])
 
-def read_reorder(filename):
+def read_reorder(filename, img):
     tree = ElementTree.ElementTree(file=filename)
     root = tree.getroot()
     def chunks(l, n):
@@ -210,7 +214,9 @@ def read_reorder(filename):
     img_width = tree.find('.//width').text
     img_depth = tree.find('.//depth').text
     print("image shape: ", img_height, img_width, img_depth)
-    img_shape = [img_height, img_width, img_depth]
+    img_shapeXML = [img_height, img_width, img_depth]
+    img = np.array(Image.open(img))
+    img_shape = img.shape
     coordinates = chunked
 
     if len(coordinates) > 0:
@@ -245,7 +251,7 @@ def read_reorder(filename):
             #print("ordered_points_list_minmax: ", ordered_points_list_minmax)
             bbox_resized_list = []
             for bbox in ordered_points_list:
-                bbox_resize = cvResizeBBs(bbox, img_shape)
+                bbox_resize = cvResizeBBs(bbox, img_shape, img_shapeXML)
                 bbox_resized_list.append(bbox_resize)
         else:
             print("single box")
@@ -260,7 +266,7 @@ def read_reorder(filename):
             print("ordered_points_list: ", ordered_points_list)
             #for bbox in ordered_points_list:
             ordered_points_list = [item for sublist in ordered_points_list for item in sublist]
-            bbox_resized_list = cvResizeBBs(ordered_points_list, img_shape)
+            bbox_resized_list = cvResizeBBs(ordered_points_list, img_shape, img_shapeXML)
             bbox_resized_list = [bbox_resized_list]
         #return np.array(ordered_points_list, dtype=np.float32), img_shape
         img_shape = [512,512,3]
@@ -288,7 +294,8 @@ def main():
         filename_split = os.path.splitext(infile)
         filename_zero, fileext = filename_split
         basename = os.path.basename(filename_zero)
-        XMLout = writePredictionsXML(infile)
+        print("basename: ", basename)
+        XMLout = writePredictionsXML(args.convertPath+basename+".xml", args.imgPath+basename+".jpg")
     print("done")
 
 main()
