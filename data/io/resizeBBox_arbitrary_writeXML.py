@@ -158,8 +158,12 @@ def cvResizeBBs(bb, imgShapeXML, imgShape):
 
     targetSizeX = int(imgShape[1])
     targetSizeY = int(imgShape[0])
-    x_scale = targetSizeX / x_
-    y_scale = targetSizeY / y_
+    #x_scale = targetSizeX / x_
+    #y_scale = targetSizeY / y_
+    
+    x_scale = x_ / targetSizeX
+    y_scale = y_ / targetSizeY
+    
     print(x_scale, y_scale)
 
     # original frame as named values
