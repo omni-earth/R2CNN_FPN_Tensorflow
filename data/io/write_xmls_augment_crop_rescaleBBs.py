@@ -211,8 +211,8 @@ def augment_img(img, d):
     #image_after = keypoints_aug.draw_on_image(image_aug, size=7)
     misc.imsave(args.imPath+basename+'_rotate'+str(d)+'.jpg', image_aug)
     y1,y2,x1,x2 = 0,image_aug.shape[0], 0, image_aug.shape[1]
-    cropped_image_aug = image_aug[y1+200:y2-200, x1+200:x2-200]
-    misc.imsave(args.imPath+basename+'_rotate'+str(d)+'_crop200'+'.jpg', cropped_image_aug)
+    cropped_image_aug = image_aug[y1+100:y2-100, x1+100:x2-100]
+    misc.imsave(args.imPath+basename+'_rotate'+str(d)+'_crop100'+'.jpg', cropped_image_aug)
     #print("image_aug shape: ", image_aug.shape)
     return cropped_image_aug
 
@@ -220,7 +220,7 @@ def augment_img(img, d):
 def augment_keypoints(kpts, img, d):
     ia.seed(1)
     #seq = iaa.Sequential([iaa.Affine(rotate=int(d)), iaa.CropAndPad(px=(-75, 0), keep_size=False)]) # rotate by exactly d degrees
-    seq = iaa.Sequential([iaa.Affine(rotate=int(d)), iaa.Affine(translate_px={"x": -200, "y": -200})])
+    seq = iaa.Sequential([iaa.Affine(rotate=int(d)), iaa.Affine(translate_px={"x": -100, "y": -100})])
     #seq = iaa.Sequential([iaa.Affine(rotate=int(d))]) # rotate by exactly d degrees
     seq_det = seq.to_deterministic()
     keypoints_og = ia.KeypointsOnImage([
@@ -309,7 +309,7 @@ def getInfo(f, d):
     filename = basename
     print("original points list: ", chunked)
     print("ordered_points_list: ", ordered_points_list)
-    filename_aug = filename+'_rotate'+str(d)+'_crop200'
+    filename_aug = filename+'_rotate'+str(d)+'_crop100'
 
     #filename_aug = filename    
 
