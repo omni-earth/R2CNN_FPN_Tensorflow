@@ -273,20 +273,20 @@ def read_reorder(filename, img):
             bbox_resized_list = cvResizeBBs(ordered_points_list, img_shape, img_shapeXML)
             bbox_resized_list = [bbox_resized_list]
         #return np.array(ordered_points_list, dtype=np.float32), img_shape
-        img_shape = [512,512,3]
+        #img_shape = [512,512,3]
         return np.array(bbox_resized_list, dtype=np.float32), img_shape
     else:
         return np.array([], dtype=np.float32), img_shape
         
        
-def writePredictionsXML(filename):
+def writePredictionsXML(filename, img):
     filename_split = os.path.splitext(filename)
     filename_zero, fileext = filename_split
     basename = os.path.basename(filename_zero)
     print("file: ", basename)
     #tree = ElementTree.ElementTree(file=filename)
     #root = tree.getroot()
-    coordinates, img_shape = read_reorder(filename)
+    coordinates, img_shape = read_reorder(filename, img)
     xmlOut = XML(basename, coordinates, img_shape)
     return xmlOut
 
