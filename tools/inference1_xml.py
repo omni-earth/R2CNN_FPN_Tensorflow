@@ -386,7 +386,7 @@ def inference():
                                                    labels=_detection_category_rotate,
                                                    scores=_fast_rcnn_score_rotate)
 
-                xml_rotate_np = writePredictionsXML(img_name, _fast_rcnn_decode_boxes_rotate, img.shape)
+                xml_rotate_np = writePredictionsXML(img_name, _fast_rcnn_decode_boxes_rotate, img_horizontal_np.shape)
 
                 mkdir(cfgs.INFERENCE_SAVE_PATH)
                 print("save_dir: ", cfgs.INFERENCE_SAVE_PATH)
