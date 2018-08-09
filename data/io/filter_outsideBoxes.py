@@ -170,7 +170,7 @@ def getInfo(f, d):
     print("original points list: ", chunked)
     print("ordered_points_list: ", ordered_points_list)
 
-    filename_aug = filename
+    filename_aug = basename
 
     xSorted = sorted(pairs,key=itemgetter(0))
     xSorted_extract = [i[0] for i in xSorted]
