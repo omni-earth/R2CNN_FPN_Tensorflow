@@ -28,7 +28,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = cfgs.GPU_GROUP
 
 def train():
     for d in [cfgs.GPU_GROUP]:
-        with tf.device(d):
+        with tf.device('/device:GPU:'+str(d)):
             with tf.Graph().as_default():
                 with tf.name_scope('get_batch'):
                     img_name_batch, img_batch, gtboxes_and_label_batch, num_objects_batch, num_batches = \
